@@ -33,7 +33,7 @@ public class UserService {
 
         User adminUser = new User();
         adminUser.setUsername("admin123");
-        adminUser.setPassword(getEncodedPassword("adminpass"));
+        adminUser.setPassword(passwordEncoder.encode("adminpass"));
         adminUser.setFullName("admin admin");
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
@@ -42,7 +42,7 @@ public class UserService {
 
         User user = new User();
         user.setUsername("user");
-        user.setPassword(getEncodedPassword("userpass"));
+        user.setPassword(passwordEncoder.encode("userpass"));
         user.setFullName("user user");
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
@@ -55,11 +55,7 @@ public class UserService {
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(role);
         user.setUserRole(userRoles);
-        user.setPassword(getEncodedPassword(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
-    }
-
-    public String getEncodedPassword(String password) {
-        return passwordEncoder.encode(password);
     }
 }
